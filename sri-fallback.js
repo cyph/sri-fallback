@@ -1,8 +1,5 @@
 /* 
  * Implements non-standard "x-sri-fallback" attribute for use with SRI.
- * 
- * Copyright Cyph, Inc. 2016
- * MIT licenced
  */
 
 (function () {
