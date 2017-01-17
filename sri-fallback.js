@@ -1,15 +1,15 @@
-/* 
+/*
  * Implements non-standard "x-sri-fallback" attribute for use with SRI.
  */
 
 (function () {
 
 
-var attributeName	= 'x-sri-fallback';
+var attributeName = 'x-sri-fallback';
 
 function processNode (node) {
-	var fallback		= node.getAttribute && node.getAttribute(attributeName);
-	var tagName			= (node.tagName || '').toLowerCase();
+	var fallback = node.getAttribute && node.getAttribute(attributeName);
+	var tagName = (node.tagName || '').toLowerCase();
 
 	var nodeAttribute	=
 		tagName === 'script' && node.src ?
@@ -20,18 +20,19 @@ function processNode (node) {
 	;
 
 	if (fallback && nodeAttribute) {
-		node.onerror	= function () {
-			var newNode				= document.createElement(tagName);
-			newNode.crossOrigin		= node.crossOrigin;
-			newNode.integrity		= node.integrity;
-			newNode[nodeAttribute]	= fallback;
+		node.onerror = function () {
+			var newNode = document.createElement(tagName);
+			newNode.crossOrigin = node.crossOrigin;
+			newNode.integrity = node.integrity;
+			newNode[nodeAttribute] = fallback;
+			if (tagName === 'link') newNode.rel = node.rel;
 
 			newNode.onerror	= function () {
 				console.log(
 					'SRI fallback ' +
 					fallback +
 					' also failed to match integrity string ' +
-					newNode.integrity + 
+					newNode.integrity +
 					'.'
 				);
 			};
@@ -43,8 +44,8 @@ function processNode (node) {
 
 new MutationObserver(function (mutations) {
 	for (var i = 0 ; i < mutations.length ; ++i) {
-		var mutation	= mutations[i];
-		var addedNodes	= mutation.addedNodes;
+		var mutation = mutations[i];
+		var addedNodes = mutation.addedNodes;
 
 		for (var j = 0 ; j < addedNodes.length ; ++j) {
 			processNode(addedNodes[j]);
