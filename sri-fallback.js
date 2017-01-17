@@ -26,6 +26,10 @@ function processNode (node) {
 			newNode.integrity		= node.integrity;
 			newNode[nodeAttribute]	= fallback;
 
+			if (tagName === 'link') {
+				newNode.rel	= node.rel;
+			}
+
 			newNode.onerror	= function () {
 				console.log(
 					'SRI fallback ' +
