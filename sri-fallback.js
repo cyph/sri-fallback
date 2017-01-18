@@ -1,4 +1,4 @@
-/* 
+/*
  * Implements non-standard "x-sri-fallback" attribute for use with SRI.
  */
 
@@ -35,7 +35,7 @@ function processNode (node) {
 					'SRI fallback ' +
 					fallback +
 					' also failed to match integrity string ' +
-					newNode.integrity + 
+					newNode.integrity +
 					'.'
 				);
 			};
